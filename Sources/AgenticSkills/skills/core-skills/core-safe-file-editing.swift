@@ -10,14 +10,16 @@ public extension CoreSkillProvider {
         Use a conservative file-editing workflow.
 
         Workflow:
-        1. Inspect the target path before mutating it.
-        2. Use `\(ReadFileTool.identifier.rawValue)` for the smallest useful line range when the file is already known.
-        3. Use `\(ScanPathsTool.identifier.rawValue)` only when the relevant path is unknown or must be discovered.
-        4. Prefer `\(EditFileTool.identifier.rawValue)` for targeted line operations.
-        5. Use `\(WriteFileTool.identifier.rawValue)` only when replacing an entire file is clearer and safer than line edits.
-        6. Keep edits contiguous and reviewable.
-        7. Preserve existing style, naming, imports, formatting, comments, and public API shape unless the task explicitly requires changing them.
-        8. After mutation, summarize touched paths, edit type, and changed line ranges or diff summary when available.
+        1. Inspect the target source before mutating it.
+        2. When the target file is not yet known, use `\(FindPathsTool.identifier.rawValue)` and `\(SearchSourcesTool.identifier.rawValue)` to narrow the mutation target before loading source text.
+        3. Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect search-discovered candidate ranges before editing them.
+        4. Use `\(ReadFileTool.identifier.rawValue)` for the smallest useful line range when the exact file is already known.
+        5. Use `\(ScanPathsTool.identifier.rawValue)` only when filesystem topology or exhaustive path discovery is required.
+        6. Prefer `\(EditFileTool.identifier.rawValue)` for targeted line operations.
+        7. Use `\(WriteFileTool.identifier.rawValue)` only when replacing an entire file is clearer and safer than line edits.
+        8. Keep edits contiguous and reviewable.
+        9. Preserve existing style, naming, imports, formatting, comments, and public API shape unless the task explicitly requires changing them.
+        10. After mutation, summarize touched paths, edit type, and changed line ranges or diff summary when available.
 
         Safety rules:
         - Never mutate a file you have not inspected unless the user explicitly asked for a blind write.
@@ -36,6 +38,9 @@ public extension CoreSkillProvider {
                     .tool(EditFileTool.identifier)
                 ],
                 optional: [
+                    .tool(FindPathsTool.identifier),
+                    .tool(SearchSourcesTool.identifier),
+                    .tool(LoadSearchContextTool.identifier),
                     .tool(ScanPathsTool.identifier),
                     .tool(WriteFileTool.identifier)
                 ]

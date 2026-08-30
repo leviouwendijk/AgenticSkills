@@ -19,8 +19,11 @@ public extension CoreSkillProvider {
         7. After the change, explain what would need to be run or inspected to verify it.
 
         When tools are available:
-        - Use `\(ReadFileTool.identifier.rawValue)` to inspect the suspected region.
-        - Use `\(ScanPathsTool.identifier.rawValue)` only when the relevant files are not known.
+        - Use `\(FindPathsTool.identifier.rawValue)` when the failing file is unknown but path names or concepts can narrow it.
+        - Use `\(SearchSourcesTool.identifier.rawValue)` with failing identifiers, symbols, messages, or hypotheses to locate likely source regions.
+        - Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect the strongest search candidates before patching.
+        - Use `\(ReadFileTool.identifier.rawValue)` when an exact source region is already known or a direct fallback read is appropriate.
+        - Use `\(ScanPathsTool.identifier.rawValue)` when filesystem topology itself must be inspected.
         - Use `\(EditFileTool.identifier.rawValue)` for small patches.
         - Use `\(WriteFileTool.identifier.rawValue)` only when a whole-file replacement is justified.
 
@@ -36,6 +39,9 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
+                    .tool(FindPathsTool.identifier),
+                    .tool(SearchSourcesTool.identifier),
+                    .tool(LoadSearchContextTool.identifier),
                     .tool(ReadFileTool.identifier),
                     .tool(ScanPathsTool.identifier),
                     .tool(EditFileTool.identifier),

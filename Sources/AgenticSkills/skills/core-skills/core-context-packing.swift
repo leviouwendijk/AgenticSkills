@@ -11,12 +11,15 @@ public extension CoreSkillProvider {
 
         Workflow:
         1. Start from the user request and identify the smallest facts needed to answer or act.
-        2. Prefer known paths and targeted reads over workspace-wide scans.
-        3. Use `\(ScanPathsTool.identifier.rawValue)` when you need to discover candidate files.
-        4. Use `\(ReadFileTool.identifier.rawValue)` with line windows when only part of a file is relevant.
-        5. Keep source boundaries visible: path, line range, and why that source matters.
-        6. Separate durable task facts from incidental surrounding text.
-        7. When context is incomplete, name the missing fact and the next smallest read that would resolve it.
+        2. Narrow context through deterministic discovery before loading broad source material.
+        3. Use `\(FindPathsTool.identifier.rawValue)` to rank likely files or directories by path when the target is not already known.
+        4. Use `\(SearchSourcesTool.identifier.rawValue)` to locate relevant implementation or text ranges inside the authorized source universe.
+        5. Use `\(LoadSearchContextTool.identifier.rawValue)` to admit the strongest search candidates as bounded exact source context with freshness validation.
+        6. Use `\(ScanPathsTool.identifier.rawValue)` when filesystem topology or exhaustive enumeration itself is needed.
+        7. Use `\(ReadFileTool.identifier.rawValue)` when the exact file and useful range are already known, or when a deliberate broader direct read is justified.
+        8. Keep source boundaries visible: path, line range, and why that source matters.
+        9. Separate durable task facts from incidental surrounding text.
+        10. When context is incomplete, name the missing fact and the next smallest retrieval that would resolve it.
 
         Packing priorities:
         - User’s current objective.
@@ -36,6 +39,9 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
+                    .tool(FindPathsTool.identifier),
+                    .tool(SearchSourcesTool.identifier),
+                    .tool(LoadSearchContextTool.identifier),
                     .tool(ScanPathsTool.identifier),
                     .tool(ReadFileTool.identifier)
                 ]

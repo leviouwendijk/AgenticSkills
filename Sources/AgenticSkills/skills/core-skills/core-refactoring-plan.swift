@@ -23,8 +23,11 @@ public extension CoreSkillProvider {
         7. Summarize what changed and what remains.
 
         Tool use:
-        - Use `\(ScanPathsTool.identifier.rawValue)` to find likely affected files when no domain tool exists.
-        - Use `\(ReadFileTool.identifier.rawValue)` to inspect definitions and representative call sites.
+        - Use `\(FindPathsTool.identifier.rawValue)` to rank likely affected files when no structural domain tool exists.
+        - Use `\(SearchSourcesTool.identifier.rawValue)` to locate definitions, usages, compatibility names, and representative call sites across those sources.
+        - Use `\(LoadSearchContextTool.identifier.rawValue)` to admit only the source regions needed to understand the refactor boundary.
+        - Use `\(ReadFileTool.identifier.rawValue)` for direct inspection when an exact file or range is already known.
+        - Use `\(ScanPathsTool.identifier.rawValue)` when package or directory topology affects the migration.
         - Use `\(EditFileTool.identifier.rawValue)` for targeted migrations.
         - Avoid whole-file replacement unless the refactor is naturally file-scoped.
 
@@ -40,6 +43,9 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
+                    .tool(FindPathsTool.identifier),
+                    .tool(SearchSourcesTool.identifier),
+                    .tool(LoadSearchContextTool.identifier),
                     .tool(ScanPathsTool.identifier),
                     .tool(ReadFileTool.identifier),
                     .tool(EditFileTool.identifier),
