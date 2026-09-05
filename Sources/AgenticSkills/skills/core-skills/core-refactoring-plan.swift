@@ -28,7 +28,7 @@ public extension CoreSkillProvider {
         - Use `\(LoadSearchContextTool.identifier.rawValue)` to admit only the source regions needed to understand the refactor boundary.
         - Use `\(ReadFileTool.identifier.rawValue)` for direct inspection when an exact file or range is already known.
         - Use `\(ScanPathsTool.identifier.rawValue)` when package or directory topology affects the migration.
-        - Use `\(EditFileTool.identifier.rawValue)` for targeted migrations.
+        - Use `\(MutateFilesTool.identifier.rawValue)` with edit_text for targeted migrations.
         - Avoid whole-file replacement unless the refactor is naturally file-scoped.
 
         Boundaries:
@@ -48,8 +48,7 @@ public extension CoreSkillProvider {
                     .tool(LoadSearchContextTool.identifier),
                     .tool(ScanPathsTool.identifier),
                     .tool(ReadFileTool.identifier),
-                    .tool(EditFileTool.identifier),
-                    .tool(WriteFileTool.identifier)
+                    .tool(MutateFilesTool.identifier)
                 ]
             ),
             tags: [

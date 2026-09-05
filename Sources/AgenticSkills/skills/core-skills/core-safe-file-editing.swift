@@ -15,8 +15,8 @@ public extension CoreSkillProvider {
         3. Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect search-discovered candidate ranges before editing them.
         4. Use `\(ReadFileTool.identifier.rawValue)` for the smallest useful line range when the exact file is already known.
         5. Use `\(ScanPathsTool.identifier.rawValue)` only when filesystem topology or exhaustive path discovery is required.
-        6. Prefer `\(EditFileTool.identifier.rawValue)` for targeted line operations.
-        7. Use `\(WriteFileTool.identifier.rawValue)` only when replacing an entire file is clearer and safer than line edits.
+        6. Use `\(MutateFilesTool.identifier.rawValue)` with edit_text for targeted line operations.
+        7. Use replace_text in the same tool only when replacing an entire file is clearer and safer than line edits.
         8. Keep edits contiguous and reviewable.
         9. Preserve existing style, naming, imports, formatting, comments, and public API shape unless the task explicitly requires changing them.
         10. After mutation, summarize touched paths, edit type, and changed line ranges or diff summary when available.
@@ -35,14 +35,13 @@ public extension CoreSkillProvider {
             tools: .init(
                 required: [
                     .tool(ReadFileTool.identifier),
-                    .tool(EditFileTool.identifier)
+                    .tool(MutateFilesTool.identifier)
                 ],
                 optional: [
                     .tool(FindPathsTool.identifier),
                     .tool(SearchSourcesTool.identifier),
                     .tool(LoadSearchContextTool.identifier),
-                    .tool(ScanPathsTool.identifier),
-                    .tool(WriteFileTool.identifier)
+                    .tool(ScanPathsTool.identifier)
                 ]
             ),
             tags: [

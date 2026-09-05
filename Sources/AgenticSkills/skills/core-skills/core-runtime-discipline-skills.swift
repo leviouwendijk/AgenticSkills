@@ -440,7 +440,7 @@ public extension CoreSkillProvider {
         - Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect the strongest candidates with freshness validation.
         - Use `\(ReadFileTool.identifier.rawValue)` when the suspected source range is already known directly.
         - Use `\(ScanPathsTool.identifier.rawValue)` when filesystem topology itself is part of the failure.
-        - Use `\(EditFileTool.identifier.rawValue)` only after a concrete patch target is known.
+        - Use `\(MutateFilesTool.identifier.rawValue)` with edit_text only after a concrete patch target is known.
 
         Reporting:
         - Quote or preserve the exact failing identifier/message when useful.
@@ -459,7 +459,7 @@ public extension CoreSkillProvider {
                     .tool(LoadSearchContextTool.identifier),
                     .tool(ScanPathsTool.identifier),
                     .tool(ReadFileTool.identifier),
-                    .tool(EditFileTool.identifier)
+                    .tool(MutateFilesTool.identifier)
                 ]
             ),
             tags: [

@@ -24,8 +24,7 @@ public extension CoreSkillProvider {
         - Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect the strongest search candidates before patching.
         - Use `\(ReadFileTool.identifier.rawValue)` when an exact source region is already known or a direct fallback read is appropriate.
         - Use `\(ScanPathsTool.identifier.rawValue)` when filesystem topology itself must be inspected.
-        - Use `\(EditFileTool.identifier.rawValue)` for small patches.
-        - Use `\(WriteFileTool.identifier.rawValue)` only when a whole-file replacement is justified.
+        - Use `\(MutateFilesTool.identifier.rawValue)` with edit_text for small patches and replace_text for whole-file replacement.
 
         Debugging discipline:
         - Do not rewrite working code to fit a preferred style.
@@ -44,8 +43,7 @@ public extension CoreSkillProvider {
                     .tool(LoadSearchContextTool.identifier),
                     .tool(ReadFileTool.identifier),
                     .tool(ScanPathsTool.identifier),
-                    .tool(EditFileTool.identifier),
-                    .tool(WriteFileTool.identifier)
+                    .tool(MutateFilesTool.identifier)
                 ]
             ),
             tags: [
