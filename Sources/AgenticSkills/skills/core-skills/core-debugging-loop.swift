@@ -19,12 +19,12 @@ public extension CoreSkillProvider {
         7. After the change, explain what would need to be run or inspected to verify it.
 
         When tools are available:
-        - Use `\(FindPathsTool.identifier.rawValue)` when the failing file is unknown but path names or concepts can narrow it.
-        - Use `\(SearchSourcesTool.identifier.rawValue)` with failing identifiers, symbols, messages, or hypotheses to locate likely source regions.
-        - Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect the strongest search candidates before patching.
-        - Use `\(ReadFileTool.identifier.rawValue)` when an exact source region is already known or a direct fallback read is appropriate.
-        - Use `\(ScanPathsTool.identifier.rawValue)` when filesystem topology itself must be inspected.
-        - Use `\(MutateFilesTool.identifier.rawValue)` with edit_text for small patches and replace_text for whole-file replacement.
+        - Use `\(SystemIO.Tools.FindPaths.identifier.rawValue)` when the failing file is unknown but path names or concepts can narrow it.
+        - Use `\(SystemIO.Tools.SearchSources.identifier.rawValue)` with failing identifiers, symbols, messages, or hypotheses to locate likely source regions.
+        - Use `\(SystemIO.Tools.LoadSearchContext.identifier.rawValue)` to inspect the strongest search candidates before patching.
+        - Use `\(SystemIO.Tools.ReadFile.identifier.rawValue)` when an exact source region is already known or a direct fallback read is appropriate.
+        - Use `\(SystemIO.Tools.ScanPaths.identifier.rawValue)` when filesystem topology itself must be inspected.
+        - Use `\(SystemIO.Tools.MutateFiles.identifier.rawValue)` with edit_text for small patches and replace_text for whole-file replacement.
 
         Debugging discipline:
         - Do not rewrite working code to fit a preferred style.
@@ -38,12 +38,12 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
-                    .tool(FindPathsTool.identifier),
-                    .tool(SearchSourcesTool.identifier),
-                    .tool(LoadSearchContextTool.identifier),
-                    .tool(ReadFileTool.identifier),
-                    .tool(ScanPathsTool.identifier),
-                    .tool(MutateFilesTool.identifier)
+                    .tool(SystemIO.Tools.FindPaths.identifier),
+                    .tool(SystemIO.Tools.SearchSources.identifier),
+                    .tool(SystemIO.Tools.LoadSearchContext.identifier),
+                    .tool(SystemIO.Tools.ReadFile.identifier),
+                    .tool(SystemIO.Tools.ScanPaths.identifier),
+                    .tool(SystemIO.Tools.MutateFiles.identifier)
                 ]
             ),
             tags: [

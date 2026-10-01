@@ -12,11 +12,11 @@ public extension CoreSkillProvider {
         Workflow:
         1. Before loading large files, archives, transcripts, logs, ledgers, or multi-year datasets, ask what exact decision the context must support.
         2. Prefer summaries, schemas, indexes, path ranking, source search results, symbol lists, and selected records before raw bulk content.
-        3. Use `\(FindPathsTool.identifier.rawValue)` to rank likely files without reading their contents.
-        4. Use `\(SearchSourcesTool.identifier.rawValue)` to discover relevant source ranges before admitting source text.
-        5. Use `\(LoadSearchContextTool.identifier.rawValue)` to load bounded search candidates with source-fingerprint validation.
-        6. Use `\(ReadFileTool.identifier.rawValue)` with the smallest useful range when the exact source location is already known.
-        7. Use `\(ScanPathsTool.identifier.rawValue)` when topology or exhaustive path enumeration is actually required.
+        3. Use `\(SystemIO.Tools.FindPaths.identifier.rawValue)` to rank likely files without reading their contents.
+        4. Use `\(SystemIO.Tools.SearchSources.identifier.rawValue)` to discover relevant source ranges before admitting source text.
+        5. Use `\(SystemIO.Tools.LoadSearchContext.identifier.rawValue)` to load bounded search candidates with source-fingerprint validation.
+        6. Use `\(SystemIO.Tools.ReadFile.identifier.rawValue)` with the smallest useful range when the exact source location is already known.
+        7. Use `\(SystemIO.Tools.ScanPaths.identifier.rawValue)` when topology or exhaustive path enumeration is actually required.
         8. When domain tools exist, prefer deterministic parse/filter/search/aggregate tools over dumping raw data into the model.
         9. Escalate to broader context only when the narrow context is insufficient, and state why.
         10. Drop stale context when newer tool output supersedes it.
@@ -38,11 +38,11 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
-                    .tool(FindPathsTool.identifier),
-                    .tool(SearchSourcesTool.identifier),
-                    .tool(LoadSearchContextTool.identifier),
-                    .tool(ScanPathsTool.identifier),
-                    .tool(ReadFileTool.identifier)
+                    .tool(SystemIO.Tools.FindPaths.identifier),
+                    .tool(SystemIO.Tools.SearchSources.identifier),
+                    .tool(SystemIO.Tools.LoadSearchContext.identifier),
+                    .tool(SystemIO.Tools.ScanPaths.identifier),
+                    .tool(SystemIO.Tools.ReadFile.identifier)
                 ]
             ),
             tags: [
@@ -76,11 +76,11 @@ public extension CoreSkillProvider {
         7. If no relevant tool exists, state the retrieval gap and proceed with an explicit limitation.
 
         With current core tools:
-        - Use `\(FindPathsTool.identifier.rawValue)` for ranked path-name discovery when likely files are not yet known.
-        - Use `\(SearchSourcesTool.identifier.rawValue)` for ranked content and source-range discovery.
-        - Use `\(LoadSearchContextTool.identifier.rawValue)` to admit exact search candidates after reauthorization and freshness validation.
-        - Use `\(ScanPathsTool.identifier.rawValue)` for topology or exhaustive enumeration rather than as the default content-discovery step.
-        - Use `\(ReadFileTool.identifier.rawValue)` as a direct known-path or manual fallback read.
+        - Use `\(SystemIO.Tools.FindPaths.identifier.rawValue)` for ranked path-name discovery when likely files are not yet known.
+        - Use `\(SystemIO.Tools.SearchSources.identifier.rawValue)` for ranked content and source-range discovery.
+        - Use `\(SystemIO.Tools.LoadSearchContext.identifier.rawValue)` to admit exact search candidates after reauthorization and freshness validation.
+        - Use `\(SystemIO.Tools.ScanPaths.identifier.rawValue)` for topology or exhaustive enumeration rather than as the default content-discovery step.
+        - Use `\(SystemIO.Tools.ReadFile.identifier.rawValue)` as a direct known-path or manual fallback read.
         - Prefer `find_paths -> search_sources -> load_search_context` when progressively narrowing repository source context.
         - Use loaded skills for workflow guidance instead of embedding every behavior in the prompt.
 
@@ -95,11 +95,11 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
-                    .tool(FindPathsTool.identifier),
-                    .tool(SearchSourcesTool.identifier),
-                    .tool(LoadSearchContextTool.identifier),
-                    .tool(ScanPathsTool.identifier),
-                    .tool(ReadFileTool.identifier)
+                    .tool(SystemIO.Tools.FindPaths.identifier),
+                    .tool(SystemIO.Tools.SearchSources.identifier),
+                    .tool(SystemIO.Tools.LoadSearchContext.identifier),
+                    .tool(SystemIO.Tools.ScanPaths.identifier),
+                    .tool(SystemIO.Tools.ReadFile.identifier)
                 ]
             ),
             tags: [
@@ -362,8 +362,8 @@ public extension CoreSkillProvider {
         6. When sources conflict, say so and prefer newer or more direct evidence.
 
         For code and files:
-        - Use `\(SearchSourcesTool.identifier.rawValue)` when source locations still need deterministic discovery.
-        - Use `\(LoadSearchContextTool.identifier.rawValue)` to admit the exact candidate ranges that support the claim.
+        - Use `\(SystemIO.Tools.SearchSources.identifier.rawValue)` when source locations still need deterministic discovery.
+        - Use `\(SystemIO.Tools.LoadSearchContext.identifier.rawValue)` to admit the exact candidate ranges that support the claim.
         - Cite paths and line ranges when available.
         - Prefer exact snippets over paraphrase for small implementation details.
         - After edits, distinguish pre-edit evidence from post-edit evidence and do not reuse stale searched candidates after source changes.
@@ -387,11 +387,11 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
-                    .tool(FindPathsTool.identifier),
-                    .tool(SearchSourcesTool.identifier),
-                    .tool(LoadSearchContextTool.identifier),
-                    .tool(ReadFileTool.identifier),
-                    .tool(ScanPathsTool.identifier)
+                    .tool(SystemIO.Tools.FindPaths.identifier),
+                    .tool(SystemIO.Tools.SearchSources.identifier),
+                    .tool(SystemIO.Tools.LoadSearchContext.identifier),
+                    .tool(SystemIO.Tools.ReadFile.identifier),
+                    .tool(SystemIO.Tools.ScanPaths.identifier)
                 ]
             ),
             tags: [
@@ -435,12 +435,12 @@ public extension CoreSkillProvider {
         7. Only patch after the failure is narrow enough to act on.
 
         With current core tools:
-        - Use `\(FindPathsTool.identifier.rawValue)` when the failing file is unknown but path evidence can narrow the search.
-        - Use `\(SearchSourcesTool.identifier.rawValue)` with exact failure identifiers or messages to locate likely source ranges.
-        - Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect the strongest candidates with freshness validation.
-        - Use `\(ReadFileTool.identifier.rawValue)` when the suspected source range is already known directly.
-        - Use `\(ScanPathsTool.identifier.rawValue)` when filesystem topology itself is part of the failure.
-        - Use `\(MutateFilesTool.identifier.rawValue)` with edit_text only after a concrete patch target is known.
+        - Use `\(SystemIO.Tools.FindPaths.identifier.rawValue)` when the failing file is unknown but path evidence can narrow the search.
+        - Use `\(SystemIO.Tools.SearchSources.identifier.rawValue)` with exact failure identifiers or messages to locate likely source ranges.
+        - Use `\(SystemIO.Tools.LoadSearchContext.identifier.rawValue)` to inspect the strongest candidates with freshness validation.
+        - Use `\(SystemIO.Tools.ReadFile.identifier.rawValue)` when the suspected source range is already known directly.
+        - Use `\(SystemIO.Tools.ScanPaths.identifier.rawValue)` when filesystem topology itself is part of the failure.
+        - Use `\(SystemIO.Tools.MutateFiles.identifier.rawValue)` with edit_text only after a concrete patch target is known.
 
         Reporting:
         - Quote or preserve the exact failing identifier/message when useful.
@@ -454,12 +454,12 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
-                    .tool(FindPathsTool.identifier),
-                    .tool(SearchSourcesTool.identifier),
-                    .tool(LoadSearchContextTool.identifier),
-                    .tool(ScanPathsTool.identifier),
-                    .tool(ReadFileTool.identifier),
-                    .tool(MutateFilesTool.identifier)
+                    .tool(SystemIO.Tools.FindPaths.identifier),
+                    .tool(SystemIO.Tools.SearchSources.identifier),
+                    .tool(SystemIO.Tools.LoadSearchContext.identifier),
+                    .tool(SystemIO.Tools.ScanPaths.identifier),
+                    .tool(SystemIO.Tools.ReadFile.identifier),
+                    .tool(SystemIO.Tools.MutateFiles.identifier)
                 ]
             ),
             tags: [

@@ -23,12 +23,12 @@ public extension CoreSkillProvider {
         7. Summarize what changed and what remains.
 
         Tool use:
-        - Use `\(FindPathsTool.identifier.rawValue)` to rank likely affected files when no structural domain tool exists.
-        - Use `\(SearchSourcesTool.identifier.rawValue)` to locate definitions, usages, compatibility names, and representative call sites across those sources.
-        - Use `\(LoadSearchContextTool.identifier.rawValue)` to admit only the source regions needed to understand the refactor boundary.
-        - Use `\(ReadFileTool.identifier.rawValue)` for direct inspection when an exact file or range is already known.
-        - Use `\(ScanPathsTool.identifier.rawValue)` when package or directory topology affects the migration.
-        - Use `\(MutateFilesTool.identifier.rawValue)` with edit_text for targeted migrations.
+        - Use `\(SystemIO.Tools.FindPaths.identifier.rawValue)` to rank likely affected files when no structural domain tool exists.
+        - Use `\(SystemIO.Tools.SearchSources.identifier.rawValue)` to locate definitions, usages, compatibility names, and representative call sites across those sources.
+        - Use `\(SystemIO.Tools.LoadSearchContext.identifier.rawValue)` to admit only the source regions needed to understand the refactor boundary.
+        - Use `\(SystemIO.Tools.ReadFile.identifier.rawValue)` for direct inspection when an exact file or range is already known.
+        - Use `\(SystemIO.Tools.ScanPaths.identifier.rawValue)` when package or directory topology affects the migration.
+        - Use `\(SystemIO.Tools.MutateFiles.identifier.rawValue)` with edit_text for targeted migrations.
         - Avoid whole-file replacement unless the refactor is naturally file-scoped.
 
         Boundaries:
@@ -43,12 +43,12 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 optional: [
-                    .tool(FindPathsTool.identifier),
-                    .tool(SearchSourcesTool.identifier),
-                    .tool(LoadSearchContextTool.identifier),
-                    .tool(ScanPathsTool.identifier),
-                    .tool(ReadFileTool.identifier),
-                    .tool(MutateFilesTool.identifier)
+                    .tool(SystemIO.Tools.FindPaths.identifier),
+                    .tool(SystemIO.Tools.SearchSources.identifier),
+                    .tool(SystemIO.Tools.LoadSearchContext.identifier),
+                    .tool(SystemIO.Tools.ScanPaths.identifier),
+                    .tool(SystemIO.Tools.ReadFile.identifier),
+                    .tool(SystemIO.Tools.MutateFiles.identifier)
                 ]
             ),
             tags: [

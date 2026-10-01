@@ -11,11 +11,11 @@ public extension CoreSkillProvider {
 
         Workflow:
         1. Inspect the target source before mutating it.
-        2. When the target file is not yet known, use `\(FindPathsTool.identifier.rawValue)` and `\(SearchSourcesTool.identifier.rawValue)` to narrow the mutation target before loading source text.
-        3. Use `\(LoadSearchContextTool.identifier.rawValue)` to inspect search-discovered candidate ranges before editing them.
-        4. Use `\(ReadFileTool.identifier.rawValue)` for the smallest useful line range when the exact file is already known.
-        5. Use `\(ScanPathsTool.identifier.rawValue)` only when filesystem topology or exhaustive path discovery is required.
-        6. Use `\(MutateFilesTool.identifier.rawValue)` with edit_text for targeted line operations.
+        2. When the target file is not yet known, use `\(SystemIO.Tools.FindPaths.identifier.rawValue)` and `\(SystemIO.Tools.SearchSources.identifier.rawValue)` to narrow the mutation target before loading source text.
+        3. Use `\(SystemIO.Tools.LoadSearchContext.identifier.rawValue)` to inspect search-discovered candidate ranges before editing them.
+        4. Use `\(SystemIO.Tools.ReadFile.identifier.rawValue)` for the smallest useful line range when the exact file is already known.
+        5. Use `\(SystemIO.Tools.ScanPaths.identifier.rawValue)` only when filesystem topology or exhaustive path discovery is required.
+        6. Use `\(SystemIO.Tools.MutateFiles.identifier.rawValue)` with edit_text for targeted line operations.
         7. Use replace_text in the same tool only when replacing an entire file is clearer and safer than line edits.
         8. Keep edits contiguous and reviewable.
         9. Preserve existing style, naming, imports, formatting, comments, and public API shape unless the task explicitly requires changing them.
@@ -34,14 +34,14 @@ public extension CoreSkillProvider {
             ],
             tools: .init(
                 required: [
-                    .tool(ReadFileTool.identifier),
-                    .tool(MutateFilesTool.identifier)
+                    .tool(SystemIO.Tools.ReadFile.identifier),
+                    .tool(SystemIO.Tools.MutateFiles.identifier)
                 ],
                 optional: [
-                    .tool(FindPathsTool.identifier),
-                    .tool(SearchSourcesTool.identifier),
-                    .tool(LoadSearchContextTool.identifier),
-                    .tool(ScanPathsTool.identifier)
+                    .tool(SystemIO.Tools.FindPaths.identifier),
+                    .tool(SystemIO.Tools.SearchSources.identifier),
+                    .tool(SystemIO.Tools.LoadSearchContext.identifier),
+                    .tool(SystemIO.Tools.ScanPaths.identifier)
                 ]
             ),
             tags: [
